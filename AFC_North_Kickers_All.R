@@ -21,3 +21,12 @@ kickers <- pbp %>%
   select(season, week, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential,
          score_differential_post, kick_distance, half_seconds_remaining, game_half, qtr, time, end_clock_time,
          kicker_player_name)
+
+tucker <- kickers %>% 
+  filter(kicker_player_name == "J.Tucker")
+
+boswell <- kickers %>% 
+  filter(kicker_player_name == "C.Boswell")
+
+mcpherson <- kickers %>% 
+  filter(kicker_player_name == "E.McPherson")
