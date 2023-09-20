@@ -13,5 +13,5 @@ kickers <- load_pbp(seasons = TRUE) %>%
 kicker_summary <- calculate_player_stats_kicking(kickers, weekly = FALSE)
 
 kickers_detailed <- kickers %>% 
-  select(season, week, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential, score_differential_post, 
+  select(season, week, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential_post, 
          kick_distance, half_seconds_remaining, game_half, time, end_clock_time, kicker_player_name)
