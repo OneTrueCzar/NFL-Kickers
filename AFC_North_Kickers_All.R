@@ -6,7 +6,7 @@ pbp <- load_pbp(seasons = TRUE)
 
 kicker_summary <- calculate_player_stats_kicking(pbp, weekly = FALSE)
 
-kickers <- load_pbp(seasons = TRUE) %>% 
+kickers <- pbp %>% 
   select(season, week, season_type, play_type, field_goal_result, score_differential_post, kick_distance, half_seconds_remaining, game_half, time, end_clock_time, desc, kicker_player_name) %>% 
   filter(play_type == "field_goal",
          score_differential_post >= 0 & score_differential_post <= 3,
