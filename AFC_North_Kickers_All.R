@@ -1,8 +1,11 @@
 library(tidyverse)
 library(nflreadr)
 library(nflfastR)
+library(nflplotR)
 
-pbp <- load_pbp(seasons = c("2018":"2023")) %>%
+pbp <- load_pbp(seasons = c("2018":"2023")) %>% 
+  rename("team_abbr" = "posteam") %>% 
+  merge(., logos, by = "team_abbr") %>%
   filter(play_type == "field_goal",
          score_differential <= 0,
          score_differential_post >= -3 & score_differential_post <= 3,
@@ -18,9 +21,11 @@ kicker_summary <- calculate_player_stats_kicking(pbp, weekly = FALSE) %>%
   mutate(gwfg_pct = round((`gwfg_made` / `gwfg_att`), digits = 3))
 
 kickers <- pbp %>% 
-  select(season, week, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential,
+  select(team_abbr, season, week, game_date, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential,
          score_differential_post, kick_distance, half_seconds_remaining, game_half, qtr, time, end_clock_time,
          kicker_player_name)
+
+kickers_logos <- merge(kickers, logos, by = "team_abbr", all.x = TRUE)
 
 tucker <- kickers %>% 
   filter(kicker_player_name == "J.Tucker")
@@ -30,3 +35,5 @@ boswell <- kickers %>%
 
 mcpherson <- kickers %>% 
   filter(kicker_player_name == "E.McPherson")
+
+logos <- load_teams(current = TRUE)
