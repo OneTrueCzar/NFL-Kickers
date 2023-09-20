@@ -1,19 +1,15 @@
 library(tidyverse)
 library(nflreadr)
 library(nflfastR)
-library(nflplotR)
 
-logos <- load_teams(current = TRUE)
-
-pbp <- load_pbp(seasons = c("2018":"2023")) %>% 
-  rename("team_abbr" = "posteam") %>% 
+pbp <- load_pbp(seasons = c("2018":"2023")) %>%
   filter(play_type == "field_goal",
          score_differential <= 0,
          score_differential_post >= -3 & score_differential_post <= 3,
          half_seconds_remaining <= 300 | game_half == "Overtime",
          kicker_player_name == "J.Tucker" |
-         kicker_player_name == "C.Boswell" |
-         kicker_player_name == "E.McPherson")
+           kicker_player_name == "C.Boswell" |
+           kicker_player_name == "E.McPherson")
 
 kicker_summary <- calculate_player_stats_kicking(pbp, weekly = FALSE) %>% 
   select(player_display_name, games, fg_made:fg_made_0_19, fg_missed_0_19, fg_made_20_29, fg_missed_20_29,
@@ -22,19 +18,6 @@ kicker_summary <- calculate_player_stats_kicking(pbp, weekly = FALSE) %>%
   mutate(gwfg_pct = round((`gwfg_made` / `gwfg_att`), digits = 3))
 
 kickers <- pbp %>% 
-  select(team_abbr, season, week, game_date, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential,
+  select(season, week, season_type, defteam, game_stadium, play_type, field_goal_result, score_differential,
          score_differential_post, kick_distance, half_seconds_remaining, game_half, qtr, time, end_clock_time,
          kicker_player_name)
-
-kickers_logos <- merge(kickers, logos, by = "team_abbr", all.x = TRUE)
-
-tucker <- kickers %>% 
-  filter(kicker_player_name == "J.Tucker")
-
-boswell <- kickers %>% 
-  filter(kicker_player_name == "C.Boswell")
-
-mcpherson <- kickers %>% 
-  filter(kicker_player_name == "E.McPherson")
-
-common_cols <- 
