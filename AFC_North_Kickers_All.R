@@ -2,7 +2,7 @@ library(tidyverse)
 library(nflreadr)
 library(nflfastR)
 
-pbp <- load_pbp(TRUE) %>% 
+pbp <- load_pbp(seasons = c("2018":"2023")) %>% 
   filter(play_type == "field_goal",
          kicker_player_name == "J.Tucker" |
          kicker_player_name == "C.Boswell" |
