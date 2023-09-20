@@ -10,4 +10,5 @@ kickers <- load_pbp(seasons = TRUE) %>%
          kicker_player_name == "C.Boswell" |
          kicker_player_name == "E.McPherson")
 
-kicker_summary <- calculate_player_stats_kicking(kickers, weekly = TRUE)
+kicker_summary <- calculate_player_stats_kicking(kickers, weekly = TRUE) %>% 
+  select(season, week, season_type, player_display_name, fg_made:fg_blocked_distance, gwfg_att:gwfg_blocked)
