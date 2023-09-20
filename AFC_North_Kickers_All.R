@@ -3,9 +3,10 @@ library(nflreadr)
 library(nflfastR)
 library(nflplotR)
 
+logos <- load_teams(current = TRUE)
+
 pbp <- load_pbp(seasons = c("2018":"2023")) %>% 
   rename("team_abbr" = "posteam") %>% 
-  merge(., logos, by = "team_abbr") %>%
   filter(play_type == "field_goal",
          score_differential <= 0,
          score_differential_post >= -3 & score_differential_post <= 3,
@@ -36,4 +37,4 @@ boswell <- kickers %>%
 mcpherson <- kickers %>% 
   filter(kicker_player_name == "E.McPherson")
 
-logos <- load_teams(current = TRUE)
+common_cols <- 
