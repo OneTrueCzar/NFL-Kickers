@@ -3,10 +3,10 @@ library(nflreadr)
 library(nflfastR)
 
 pbp <- load_pbp(seasons = c("2018":"2022")) %>% 
-  {if (pbp$game_half != "Overtime") filter(., pbp$half_seconds_remaining <= 300)} %>% 
   filter(play_type == "field_goal",
          score_differential <= 0,
          score_differential_post >= 0 & score_differential_post <= 3,
+         case_when(game_half != "Overtime" ~ half_seconds_remaining <= 300, TRUE ~ half_seconds_remaining),
          kicker_player_name == "J.Tucker" |
          kicker_player_name == "C.Boswell" |
          kicker_player_name == "E.McPherson")
