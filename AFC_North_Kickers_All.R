@@ -8,8 +8,8 @@ pbp <- load_pbp(seasons = c("2018":"2023")) %>%
          score_differential_post >= -3 & score_differential_post <= 3,
          half_seconds_remaining <= 300 | game_half == "Overtime",
          kicker_player_name == "J.Tucker" |
-           kicker_player_name == "C.Boswell" |
-           kicker_player_name == "E.McPherson")
+         kicker_player_name == "C.Boswell" |
+         kicker_player_name == "E.McPherson")
 
 kicker_summary <- calculate_player_stats_kicking(pbp, weekly = FALSE) %>% 
   select(player_display_name, games, fg_made:fg_made_0_19, fg_missed_0_19, fg_made_20_29, fg_missed_20_29,
