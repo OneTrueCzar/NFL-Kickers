@@ -1,5 +1,6 @@
 library(tidyverse)
 library(nflreadr)
+library(nflfastR)
 
 kickers <- load_pbp(seasons = TRUE) %>% 
   select(play_type, field_goal_result, kick_distance, half_seconds_remaining, game_half, time, kicker_player_name) %>% 
