@@ -10,3 +10,13 @@ kickers <- load_pbp(seasons = TRUE) %>%
          kicker_player_name == "J.Tucker" |
          kicker_player_name == "C.Boswell" |
          kicker_player_name == "E.McPherson")
+
+kickers1 <- load_pbp(seasons = TRUE) %>% 
+  filter(play_type == "field_goal",
+         score_differential_post > 0 & score_differential_post <= 3,
+         half_seconds_remaining <= 300,
+         kicker_player_name == "J.Tucker" |
+           kicker_player_name == "C.Boswell" |
+           kicker_player_name == "E.McPherson")
+
+kicker_summary <- calculate_player_stats_kicking(kickers1, weekly = FALSE)
